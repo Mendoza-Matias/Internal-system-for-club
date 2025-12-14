@@ -1,12 +1,15 @@
 package com.mmendoza.smart_invoice_reminder.controller;
 
 import com.mmendoza.smart_invoice_reminder.domain.entities.Invoice;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/invoice")
+@RequestMapping("/api/v1/invoices")
+@RequiredArgsConstructor
 public class InvoiceController {
+
 
     @GetMapping
     public ResponseEntity<?> getAllMyInvoices() {
@@ -14,22 +17,26 @@ public class InvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createInvoice(@RequestBody Invoice invoice) {
+    public ResponseEntity<?> createInvoice(
+    ) {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{invoiceId}")
-    public ResponseEntity<?> getInvoice(@PathVariable("invoiceId") String invoiceId) {
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getInvoice(@PathVariable String id) {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{invoice}/update")
-    public ResponseEntity<?> updateInvoice(@RequestBody Invoice invoice) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateInvoice(
+            @PathVariable String id
+    ) {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{invoice}/delete")
-    public ResponseEntity<?> deleteInvoice(@RequestBody Invoice invoice) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteInvoice(@PathVariable String id) {
         return ResponseEntity.ok().build();
     }
 }
+
