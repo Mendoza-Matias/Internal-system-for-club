@@ -4,15 +4,17 @@ import com.mmendoza.smart_invoice_reminder.domain.entities.Token;
 import com.mmendoza.smart_invoice_reminder.domain.entities.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TokenService {
+
     void saveUserToken(String token, User user);
 
-    Token findTokenByToken(String token);
+    Optional<Token> getTokenWithToken(String token);
 
-    List<Token> findAllValidTokenByUser(Long userId);
+    List<Token> getAllValidTokensOfAUser(Long userId);
 
-    void revokeAllTokensByUser(Long userId);
+    void revokeAllOfAUserTokens(Long userId);
 
-    void revokeTokenByToken(String token);
+    void revokeTokenWithToken(String token);
 }

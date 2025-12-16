@@ -21,9 +21,11 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST = {
-            "/api/v1/auth/**",
+            "/api/v1/authentications/**",
             "/api/v1/client/public"
     };
+
+    private static final String LOGOUT_PATH = "/api/v1/authentications/logout";
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -39,14 +41,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers(WHITE_LIST).permitAll()
-                                .anyRequest().authenticated())
+                        req.requestMatchers(WHITE_LIST).permitAll().anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
-                        logout.logoutUrl("/api/v1/auth/logout")
-                                .addLogoutHandler(logoutHandler)
+                        logout.logoutUrl(LOGOUT_PATH).addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 );
         return http.build();

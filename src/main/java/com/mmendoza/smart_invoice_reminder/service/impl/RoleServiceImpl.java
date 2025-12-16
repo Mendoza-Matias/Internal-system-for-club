@@ -6,19 +6,19 @@ import com.mmendoza.smart_invoice_reminder.repository.RoleRepository;
 import com.mmendoza.smart_invoice_reminder.service.RoleService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
-
-    private final static String ROLE_NOT_FOUND = "Role not found";
 
     public RoleServiceImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 
     @Override
-    public Role getRolByName(String name) {
-        return roleRepository.findByName(name).orElseThrow(() -> new ResourceNotFoundException(ROLE_NOT_FOUND));
+    public Optional<Role> getRolByName(String name) {
+        return roleRepository.findByName(name);
     }
 }

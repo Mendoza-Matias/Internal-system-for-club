@@ -21,19 +21,18 @@ import java.util.Map;
 @Service
 public class JwtService {
 
-    @Value("${application.security.jwt.secret-key}")
-    private String secretKey;
-    @Value("${application.security.jwt.expiration}")
-    private long jwtExpiration;
-    @Value("${application.security.jwt.refresh-token.expiration}")
-    private long refreshExpiration;
+    private final SecurityProperties securityProperties;
+
+    public JwtService(SecurityProperties securityProperties) {
+        this.securityProperties = securityProperties;
+    }
 
     public String generateToken(UserDetails userDetails) {
-        return buildToken(userDetails, jwtExpiration);
+        return buildToken(userDetails, securityProperties.getJwt().getExpiration());
     }
 
     public String generateRefreshToken(UserDetails user) {
-        return buildToken(user, refreshExpiration);
+        return buildToken(user, securityProperties.getJwt().getRefreshToken().getExpiration());
     }
 
     private String buildToken(UserDetails userDetails, Long expiration) {
@@ -55,6 +54,11 @@ public class JwtService {
 
     public String extractUsername(String token) {
         return extractAllClaims(token).getSubject();
+    }
+
+    public String extractBearerOfToken(String token) {
+        if (token == null) return null;
+        return token.substring(7);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -80,7 +84,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        byte[] keyBytes = Decoders.BASE64.decode(securityProperties.getJwt().getSecretKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
