@@ -1,6 +1,7 @@
 package com.mmendoza.smart_invoice_reminder.domain.entities;
 
 
+import com.mmendoza.smart_invoice_reminder.domain.enums.InvoiceStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,16 +18,27 @@ import java.time.LocalDate;
 @Getter
 @Builder
 public class Invoice {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+
     private String title;
+
     private String description;
+
     private Double price;
+
     private Boolean isPayment;
+
     private LocalDate createDate;
+
     private LocalDate paymentDeadline;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
+
+    @Enumerated(EnumType.STRING)
+    private InvoiceStatus status;
 }

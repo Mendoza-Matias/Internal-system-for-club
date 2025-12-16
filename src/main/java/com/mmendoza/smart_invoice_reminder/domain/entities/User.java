@@ -20,12 +20,17 @@ import java.util.Set;
 @Getter
 @Builder
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String username;
+
     private String email;
+
     private String password;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_rol",
             joinColumns = @JoinColumn(

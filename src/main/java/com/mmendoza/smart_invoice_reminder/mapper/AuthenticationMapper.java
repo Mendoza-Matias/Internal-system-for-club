@@ -1,6 +1,5 @@
 package com.mmendoza.smart_invoice_reminder.mapper;
 
-
 import com.mmendoza.smart_invoice_reminder.domain.dtos.AuthenticationResponse;
 import com.mmendoza.smart_invoice_reminder.domain.dtos.CreateUserRequest;
 import com.mmendoza.smart_invoice_reminder.domain.dtos.RegisterRequest;

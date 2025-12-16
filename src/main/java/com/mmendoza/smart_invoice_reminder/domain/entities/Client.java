@@ -16,14 +16,21 @@ import java.util.List;
 @Getter
 @Builder
 public class Client {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+
     private String name;
+
     private String lastName;
+
     private String email;
+
     private String telephone;
+
     private String address;
+
     @OneToMany(mappedBy = "client")
     private List<Invoice> invoices;
 }
