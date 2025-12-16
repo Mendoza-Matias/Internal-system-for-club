@@ -1,21 +1,14 @@
 package com.mmendoza.smart_invoice_reminder.controller;
 
-import com.mmendoza.smart_invoice_reminder.domain.recors.AuthenticationRequest;
-import com.mmendoza.smart_invoice_reminder.domain.recors.AuthenticationResponse;
-import com.mmendoza.smart_invoice_reminder.domain.recors.RegisterRequest;
+import com.mmendoza.smart_invoice_reminder.domain.dtos.AuthenticationRequest;
+import com.mmendoza.smart_invoice_reminder.domain.dtos.AuthenticationResponse;
+import com.mmendoza.smart_invoice_reminder.domain.dtos.RegisterRequest;
 import com.mmendoza.smart_invoice_reminder.service.AuthService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/v1/authentications")
 public class AuthController {
 
     private final AuthService authService;
@@ -25,9 +18,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
-    ) {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 
@@ -38,11 +29,8 @@ public class AuthController {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
-    @PostMapping("/refresh-token")
-    public void refreshToken(
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) {
-        authService.refreshToken(request, response);
+    @PostMapping("/refresh")
+    public AuthenticationResponse refresh(@RequestHeader("Authorization") String header) {
+        return authService.refreshToken(header);
     }
 }

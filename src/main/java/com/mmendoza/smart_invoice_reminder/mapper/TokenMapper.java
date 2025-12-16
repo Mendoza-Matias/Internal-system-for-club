@@ -7,15 +7,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class TokenMapper {
 
-    private static final boolean IS_EXPIRED = false;
-    private static final boolean IS_REVOKED = false;
-
-    public Token buildToken(String token, User user) {
+    public Token toToken(String token, User user) {
         return Token.builder()
                 .token(token)
                 .user(user)
-                .expired(IS_EXPIRED)
-                .revoked(IS_REVOKED)
+                .expired(false)
+                .revoked(false)
                 .build();
     }
 }

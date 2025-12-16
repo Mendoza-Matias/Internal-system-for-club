@@ -1,9 +1,10 @@
 package com.mmendoza.smart_invoice_reminder.validator;
 
-import com.mmendoza.smart_invoice_reminder.domain.recors.CreateUserRequest;
+import com.mmendoza.smart_invoice_reminder.domain.dtos.CreateUserRequest;
 import com.mmendoza.smart_invoice_reminder.exceptions.ValidationException;
 import com.mmendoza.smart_invoice_reminder.exceptions.errors.UserError;
 import com.mmendoza.smart_invoice_reminder.validator.rules.EmailValidationRule;
+import com.mmendoza.smart_invoice_reminder.validator.rules.ExistUserValidationRule;
 import com.mmendoza.smart_invoice_reminder.validator.rules.PasswordValidationRule;
 import com.mmendoza.smart_invoice_reminder.validator.rules.UsernameValidationRule;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +32,9 @@ class CreateUserValidatorTest {
     @Mock
     private PasswordValidationRule passwordValidationRule;
 
+    @Mock
+    private ExistUserValidationRule existUserValidationRule;
+
     private CreateUserRequest request;
 
     @BeforeEach
@@ -53,14 +57,12 @@ class CreateUserValidatorTest {
 
     @Test
     void validateTheExceptionOfARuleMethodTest() {
-        CreateUserRequest request =
-                new CreateUserRequest("bad", "email.example@gmail.com", "Pass$Example01");
+        CreateUserRequest request = new CreateUserRequest("bad", "email.example@gmail.com", "Pass$Example01");
 
         Mockito.doThrow(new ValidationException(UserError.USERNAME_INVALID.getMessage()))
                 .when(usernameValidationRule).validate("bad");
 
-        ValidationException exception =
-                assertThrows(ValidationException.class, () -> createUserValidator.validate(request));
+        ValidationException exception = assertThrows(ValidationException.class, () -> createUserValidator.validate(request));
 
         assertEquals(UserError.USERNAME_INVALID.getMessage(), exception.getMessage());
     }

@@ -17,25 +17,22 @@ public class InvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createInvoice(
-    ) {
+    public ResponseEntity<?> createInvoice() {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getInvoice(@PathVariable String id) {
+    @GetMapping("/{invoiceId}")
+    public ResponseEntity<?> getInvoiceById(@PathVariable String invoiceId) {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateInvoice(
-            @PathVariable String id
-    ) {
+    @PutMapping("/{invoiceId}")
+    public ResponseEntity<?> updateInvoice(@PathVariable String invoiceId) {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteInvoice(@PathVariable String id) {
+    @DeleteMapping("/{invoiceId}")
+    public ResponseEntity<?> deleteInvoice(@PathVariable String invoiceId) {
         return ResponseEntity.ok().build();
     }
 }
