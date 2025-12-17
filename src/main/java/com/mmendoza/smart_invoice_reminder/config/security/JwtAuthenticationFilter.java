@@ -34,7 +34,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
         this.tokenValidator = tokenValidator;
     }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
@@ -42,19 +41,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
-        String token = jwtService.extractBearerOfToken(request.getHeader("Authorization"));
-        String username = jwtService.extractUsername(token);
-
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-            UserDetails user = userDetailsService.loadUserByUsername(username);
-
-            if (tokenValidator.isValid(token, user)) {
-                setAuthentication(request, user);
-            }
-        }
+        validateUserToken(request);
         filterChain.doFilter(request, response);
+    }
+
+    private void validateUserToken(HttpServletRequest request) {
+        //I catch the exception if the token is invalid
+        try {
+            String token = jwtService.extractBearerOfToken(request.getHeader("Authorization"));
+            String username = jwtService.extractUsername(token);
+
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+                UserDetails user = userDetailsService.loadUserByUsername(username);
+
+                if (tokenValidator.isValid(token, user)) {
+                    setAuthentication(request, user);
+                }
+            }
+        } catch (Exception e) {
+            SecurityContextHolder.clearContext();
+        }
     }
 
     private boolean hasBearerToken(HttpServletRequest request) {

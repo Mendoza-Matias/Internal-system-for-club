@@ -9,20 +9,12 @@ import org.springframework.stereotype.Component;
 public class JwtAuthenticationTokenValidator {
 
     private final JwtService jwtService;
-    private final TokenService tokenService;
 
-    public JwtAuthenticationTokenValidator(JwtService jwtService, TokenService tokenService) {
+    public JwtAuthenticationTokenValidator(JwtService jwtService) {
         this.jwtService = jwtService;
-        this.tokenService = tokenService;
     }
 
     public boolean isValid(String token, UserDetails userDetails) {
-        boolean jwtValid = jwtService.isTokenValid(token, userDetails);
-
-        boolean storedTokenValid = tokenService.getTokenWithToken(token)
-                .map(t -> !t.isExpired() && !t.isRevoked())
-                .orElse(false);
-
-        return jwtValid && storedTokenValid;
+        return jwtService.isTokenValid(token, userDetails) && jwtService.isAccessToken(token);
     }
 }

@@ -60,9 +60,9 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthenticationResponse refreshToken(String oldRefreshToken) {
 
-        String jwt = oldRefreshToken.substring(7);
+        String refreshToken = oldRefreshToken.substring(7);
 
-        String userEmail = jwtService.extractUsername(jwt);
+        String userEmail = jwtService.extractUsername(refreshToken);
 
         if (userEmail == null) {
             throw new InvalidCredentialsException(AuthenticationError.INVALID_CREDENTIALS.getMessage());
@@ -73,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
                         AuthenticationError.INVALID_CREDENTIALS.getMessage()
                 ));
 
-        if (!jwtService.isTokenValid(jwt, userDetailsMapper.toUserDetails(user))) {
+        if (!jwtService.isTokenValid(refreshToken, userDetailsMapper.toUserDetails(user))) {
             throw new InvalidCredentialsException(AuthenticationError.INVALID_CREDENTIALS.getMessage());
         }
 
