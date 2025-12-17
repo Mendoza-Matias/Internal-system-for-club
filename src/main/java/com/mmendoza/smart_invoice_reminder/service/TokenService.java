@@ -10,8 +10,6 @@ public interface TokenService {
 
     void saveUserToken(String token, User user);
 
-    Optional<Token> getTokenWithToken(String token);
-
     List<Token> getAllValidTokensOfAUser(Long userId);
 
     void revokeAllOfAUserTokens(Long userId);

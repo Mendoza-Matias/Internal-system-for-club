@@ -9,7 +9,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TokenServiceImpl implements TokenService {
@@ -30,11 +29,6 @@ public class TokenServiceImpl implements TokenService {
         Token newToken = tokenMapper.toToken(token, user);
 
         tokenRepository.save(newToken);
-    }
-
-    @Override
-    public Optional<Token> getTokenWithToken(String token) {
-        return tokenRepository.getTokenWithToken(token);
     }
 
     @Override

@@ -1,26 +1,38 @@
 package com.mmendoza.smart_invoice_reminder.controller;
 
+import com.mmendoza.smart_invoice_reminder.domain.dtos.ClientResponse;
 import com.mmendoza.smart_invoice_reminder.domain.dtos.CreateClientRequest;
 import com.mmendoza.smart_invoice_reminder.domain.dtos.UpdateClientInformation;
 import com.mmendoza.smart_invoice_reminder.domain.entities.Client;
+import com.mmendoza.smart_invoice_reminder.service.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/clients")
 public class ClientController {
 
+    private final ClientService clientService;
+
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
+    }
+
     @GetMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> getAllClients() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<ClientResponse>> getAllClients() {
+        return ResponseEntity.ok(clientService.getAllClients());
     }
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> createClient(@RequestBody CreateClientRequest request) {
-        return ResponseEntity.ok().build();
+        clientService.createClient(request);
+        return ResponseEntity.created(URI.create("/api/v1/clients")).build();
     }
 
     @GetMapping("/{clientId}")

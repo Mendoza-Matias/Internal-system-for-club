@@ -2,6 +2,7 @@ package com.mmendoza.smart_invoice_reminder.mapper;
 
 import com.mmendoza.smart_invoice_reminder.domain.entities.Token;
 import com.mmendoza.smart_invoice_reminder.domain.entities.User;
+import com.mmendoza.smart_invoice_reminder.domain.enums.TokenType;
 import org.springframework.stereotype.Component;
 
 @Component

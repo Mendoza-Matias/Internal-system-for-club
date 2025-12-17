@@ -1,5 +1,6 @@
 package com.mmendoza.smart_invoice_reminder.config.security;
 
+import com.mmendoza.smart_invoice_reminder.domain.enums.TokenType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -28,17 +29,17 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return buildToken(userDetails, securityProperties.getJwt().getExpiration());
+        return buildToken(userDetails, securityProperties.getJwt().getExpiration(), TokenType.ACCESS_TOKEN.name());
     }
 
     public String generateRefreshToken(UserDetails user) {
-        return buildToken(user, securityProperties.getJwt().getRefreshToken().getExpiration());
+        return buildToken(user, securityProperties.getJwt().getRefreshToken().getExpiration(), TokenType.REFRESH_TOKEN.name());
     }
 
-    private String buildToken(UserDetails userDetails, Long expiration) {
+    private String buildToken(UserDetails userDetails, Long expiration, String tokenType) {
         return Jwts
                 .builder()
-                .setClaims(generateExtraClaims(userDetails))
+                .setClaims(generateExtraClaims(userDetails, tokenType))
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
@@ -46,8 +47,9 @@ public class JwtService {
                 .compact();
     }
 
-    private Map<String, Object> generateExtraClaims(UserDetails userDetails) {
+    private Map<String, Object> generateExtraClaims(UserDetails userDetails, String tokenType) {
         Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("token_type", tokenType);
         extraClaims.put("roles", userDetails.getAuthorities());
         return extraClaims;
     }
@@ -70,8 +72,8 @@ public class JwtService {
         return extractExpiration(token).before(new Date());
     }
 
-    private Date extractExpiration(String token) {
-        return extractAllClaims(token).getExpiration();
+    public boolean isAccessToken(String token) {
+        return TokenType.ACCESS_TOKEN.name().equals(extractTokenType(token));
     }
 
     private Claims extractAllClaims(String token) {
@@ -81,6 +83,14 @@ public class JwtService {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    private Date extractExpiration(String token) {
+        return extractAllClaims(token).getExpiration();
+    }
+
+    private String extractTokenType(String token) {
+        return extractAllClaims(token).get("token_type").toString();
     }
 
     private Key getSignInKey() {
