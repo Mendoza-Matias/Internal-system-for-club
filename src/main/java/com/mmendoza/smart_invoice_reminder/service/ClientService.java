@@ -6,6 +6,10 @@ import com.mmendoza.smart_invoice_reminder.domain.dtos.CreateClientRequest;
 import java.util.List;
 
 public interface ClientService {
+
     List<ClientResponse> getAllClients();
+
+    ClientResponse getClientById(Long clientId);
+
     void createClient(CreateClientRequest request);
 }
