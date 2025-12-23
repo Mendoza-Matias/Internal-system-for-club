@@ -1,16 +1,25 @@
 package com.mmendoza.smart_invoice_reminder.controller;
 
+import com.mmendoza.smart_invoice_reminder.domain.dtos.CreateClientRequest;
+import com.mmendoza.smart_invoice_reminder.domain.dtos.CreateInvoiceForAnClientRequest;
 import com.mmendoza.smart_invoice_reminder.domain.entities.Invoice;
+import com.mmendoza.smart_invoice_reminder.service.InvoiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/api/v1/invoices")
-@RequiredArgsConstructor
 public class InvoiceController {
 
+    private final InvoiceService invoiceService;
+
+    public InvoiceController(InvoiceService invoiceService) {
+        this.invoiceService = invoiceService;
+    }
 
     @GetMapping
     @PreAuthorize("hasRole('USER')")
@@ -20,8 +29,9 @@ public class InvoiceController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> createInvoice() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> createInvoiceForAnClient(@RequestBody CreateInvoiceForAnClientRequest request) {
+        invoiceService.createInvoiceForAnClient(request);
+        return ResponseEntity.created(URI.create("/api/v1/invoices")).build();
     }
 
     @GetMapping("/{invoiceId}")

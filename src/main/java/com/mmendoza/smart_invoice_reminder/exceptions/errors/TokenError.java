@@ -7,7 +7,7 @@ public enum TokenError {
 
     TOKEN_NOT_FOUND("Token not found.");
 
-    private String message;
+    private final String message;
 
     TokenError(String message) {
         this.message = message;

@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -27,15 +28,14 @@ public class Invoice {
 
     private String description;
 
-    private Double price;
-
-    private Boolean isPayment;
+    @Column(precision = 10, scale = 3)
+    private BigDecimal price;
 
     private LocalDate createDate;
 
     private LocalDate paymentDeadline;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
 

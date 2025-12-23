@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 
 @Component
 public class PasswordValidationRule {
-
     /*
      At least 8 characters
      At least one uppercase letter

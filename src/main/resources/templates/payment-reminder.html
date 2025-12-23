@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recordatorio de factura pendiente</title>
+</head>
+<body style="margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, Helvetica, sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f8; padding:20px;">
+    <tr>
+        <td align="center">
+
+            <!-- Contenedor principal -->
+            <table width="600" cellpadding="0" cellspacing="0"
+                   style="background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+
+                <!-- Header -->
+                <tr>
+                    <td style="background-color:#2563eb; padding:20px; text-align:center; color:#ffffff;">
+                        <h1 style="margin:0; font-size:22px;">Recordatorio de Pago</h1>
+                    </td>
+                </tr>
+
+                <!-- Body -->
+                <tr>
+                    <td style="padding:30px; color:#333333;">
+                        <h2 style="margin-top:0; font-size:18px;">
+                            Hola <span th:text="${name}">Cliente</span>
+                        </h2>
+
+                        <p style="font-size:14px; line-height:1.6;">
+                            Queremos recordarte que tenés una factura pendiente de pago.
+                        </p>
+
+                        <!-- Detalle factura -->
+                        <table width="100%" cellpadding="0" cellspacing="0"
+                               style="margin:20px 0; background-color:#f9fafb; border-radius:6px; padding:15px;">
+                            <tr>
+                                <td style="font-size:14px;">
+                                    <strong>Monto:</strong>
+                                </td>
+                                <td align="right" style="font-size:16px; font-weight:bold; color:#2563eb;">
+                                    $<span th:text="${amount}">0.00</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:14px; padding-top:10px;">
+                                    <strong>Fecha de vencimiento:</strong>
+                                </td>
+                                <td align="right" style="font-size:14px; padding-top:10px;">
+                                    <span th:text="${deadline}">dd/MM/yyyy</span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p style="font-size:14px; line-height:1.6;">
+                            Te recomendamos realizar el pago antes de la fecha de vencimiento
+                            para evitar cargos adicionales o interrupciones del servicio.
+                        </p>
+
+                        <!-- CTA -->
+                        <!--<div style="text-align:center; margin:30px 0;">
+                            <a th:href="${paymentLink}"
+                               style="background-color:#2563eb; color:#ffffff; text-decoration:none;
+                                      padding:12px 24px; border-radius:6px; font-size:14px; display:inline-block;">
+                                Pagar factura
+                            </a>
+                        </div>-->
+
+                        <p style="font-size:14px;">
+                            Si ya realizaste el pago, podés ignorar este mensaje.
+                        </p>
+
+                        <p style="font-size:14px; margin-bottom:0;">
+                            Gracias por confiar en nosotros,<br>
+                            <strong>Equipo de Soporte</strong>
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td style="background-color:#f1f5f9; padding:15px; text-align:center; font-size:12px; color:#6b7280;">
+                        Este es un mensaje automático, por favor no respondas a este correo.
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
