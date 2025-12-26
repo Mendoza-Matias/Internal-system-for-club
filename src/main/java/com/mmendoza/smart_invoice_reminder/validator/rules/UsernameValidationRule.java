@@ -13,7 +13,6 @@ public class UsernameValidationRule {
                     UserError.USERNAME_REQUIRED.getMessage()
             );
         }
-
         if (username.length() <= 3) {
             throw new ValidationException(
                     UserError.USERNAME_INVALID.getMessage()

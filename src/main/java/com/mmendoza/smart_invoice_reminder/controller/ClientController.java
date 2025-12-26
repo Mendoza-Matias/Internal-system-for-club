@@ -3,7 +3,6 @@ package com.mmendoza.smart_invoice_reminder.controller;
 import com.mmendoza.smart_invoice_reminder.domain.dtos.ClientResponse;
 import com.mmendoza.smart_invoice_reminder.domain.dtos.CreateClientRequest;
 import com.mmendoza.smart_invoice_reminder.domain.dtos.UpdateClientInformation;
-import com.mmendoza.smart_invoice_reminder.domain.entities.Client;
 import com.mmendoza.smart_invoice_reminder.service.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

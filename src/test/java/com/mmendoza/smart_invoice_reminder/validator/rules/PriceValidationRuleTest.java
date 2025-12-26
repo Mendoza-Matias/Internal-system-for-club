@@ -1,48 +1,51 @@
 package com.mmendoza.smart_invoice_reminder.validator.rules;
 
 import com.mmendoza.smart_invoice_reminder.exceptions.ValidationException;
-import com.mmendoza.smart_invoice_reminder.exceptions.errors.UserError;
+import com.mmendoza.smart_invoice_reminder.exceptions.errors.InvoiceError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class PasswordValidationRuleTest {
+class PriceValidationRuleTest {
 
     @InjectMocks
-    private PasswordValidationRule rule;
+    private PriceValidationRule rule;
 
     @Test
-    void nullPasswordTest() {
+    void nullPriceTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
             rule.validate(null);
         });
-        assertEquals(UserError.PASSWORD_REQUIRED.getMessage(), exception.getMessage());
+        assertEquals(InvoiceError.PRICE_REQUIRED.getMessage(), exception.getMessage());
     }
 
     @Test
-    void blankPasswordTest() {
+    void priceEqualToZeroTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
-            rule.validate("");
+            rule.validate(BigDecimal.ZERO);
         });
-        assertEquals(UserError.PASSWORD_REQUIRED.getMessage(), exception.getMessage());
+        assertEquals(InvoiceError.PRICE_INVALID.getMessage(), exception.getMessage());
     }
 
     @Test
-    void passwordFormatTest() {
+    void priceLessThanZeroTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
-            rule.validate("pass");
+            rule.validate(BigDecimal.valueOf(-20));
         });
-        assertEquals(UserError.PASSWORD_INVALID.getMessage(), exception.getMessage());
+        assertEquals(InvoiceError.PRICE_INVALID.getMessage(), exception.getMessage());
     }
 
     @Test
-    void validPasswordTest() {
+    void validPriceTest() {
         assertDoesNotThrow(() -> {
-            rule.validate("TestPassword$01");
+            rule.validate(BigDecimal.TEN);
         });
     }
+
 }

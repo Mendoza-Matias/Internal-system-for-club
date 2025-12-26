@@ -1,7 +1,6 @@
 package com.mmendoza.smart_invoice_reminder.validator;
 
 import com.mmendoza.smart_invoice_reminder.config.security.JwtService;
-import com.mmendoza.smart_invoice_reminder.service.TokenService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 

@@ -12,11 +12,11 @@ public class PaymentDeadLineValidationRule {
 
     public void validate(LocalDate paymentDeadline) {
         if (paymentDeadline == null) {
-            throw invalidDeadline();
+            throw new ValidationException(InvoiceError.PAYMENT_DEADLINE_REQUIRED.getMessage());
         }
 
         if (paymentDeadline.isBefore(LocalDate.now())) {
-            throw invalidDeadline();
+            throw new ValidationException(InvoiceError.PAYMENT_DEADLINE_INVALID.getMessage());
         }
 
         if (isWeekend(paymentDeadline)) {
@@ -29,11 +29,5 @@ public class PaymentDeadLineValidationRule {
     private boolean isWeekend(LocalDate paymentDeadline) {
         DayOfWeek day = paymentDeadline.getDayOfWeek();
         return day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY;
-    }
-
-    private ValidationException invalidDeadline() {
-        return new ValidationException(
-                InvoiceError.PAYMENT_DEADLINE_INVALID.getMessage()
-        );
     }
 }
