@@ -13,6 +13,8 @@ jobs:
 
     #build will run on a self-hosted server
     runs-on: ubuntu-latest
+    env:
+      PROFILE: 'test'
 
     steps:
       #check out repository and clone repository to the self-hosted server
