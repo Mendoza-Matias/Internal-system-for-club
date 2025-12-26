@@ -3,10 +3,11 @@ name: Java CI with Maven
 #trigger when anything is pushed to the main branch
 on:
   push:
-    branches: [ "feature/*" ]
-  merge:
-    branches: [ "develop" ]
-
+    branches:
+      - feature/*
+  pull_request:
+    branches:
+      - develop
 jobs:
   build:
 
