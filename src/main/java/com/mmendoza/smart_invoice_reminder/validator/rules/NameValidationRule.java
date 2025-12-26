@@ -11,7 +11,7 @@ public class NameValidationRule {
         if (name == null || name.isBlank()) {
             throw new ValidationException(ClientError.NAME_REQUIRED.getMessage());
         }
-        if (name.length() < 10) {
+        if (name.length() <= 2) {
             throw new ValidationException(ClientError.NAME_INVALID.getMessage());
         }
     }

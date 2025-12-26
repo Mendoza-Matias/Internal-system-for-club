@@ -1,7 +1,7 @@
 package com.mmendoza.smart_invoice_reminder.validator.rules;
 
 import com.mmendoza.smart_invoice_reminder.exceptions.ValidationException;
-import com.mmendoza.smart_invoice_reminder.exceptions.errors.UserError;
+import com.mmendoza.smart_invoice_reminder.exceptions.errors.InvoiceError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,39 +10,32 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class PasswordValidationRuleTest {
+class DescriptionValidationRuleTest {
 
     @InjectMocks
-    private PasswordValidationRule rule;
+    private DescriptionValidationRule rule;
 
     @Test
-    void nullPasswordTest() {
+    void nullDescriptionTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
             rule.validate(null);
         });
-        assertEquals(UserError.PASSWORD_REQUIRED.getMessage(), exception.getMessage());
+        assertEquals(InvoiceError.DESCRIPTION_REQUIRED.getMessage(), exception.getMessage());
     }
 
     @Test
-    void blankPasswordTest() {
+    void blankDescriptionTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
             rule.validate("");
         });
-        assertEquals(UserError.PASSWORD_REQUIRED.getMessage(), exception.getMessage());
+        assertEquals(InvoiceError.DESCRIPTION_REQUIRED.getMessage(), exception.getMessage());
     }
 
     @Test
-    void passwordFormatTest() {
-        ValidationException exception = assertThrows(ValidationException.class, () -> {
-            rule.validate("pass");
-        });
-        assertEquals(UserError.PASSWORD_INVALID.getMessage(), exception.getMessage());
-    }
-
-    @Test
-    void validPasswordTest() {
+    void validDescriptionTest() {
         assertDoesNotThrow(() -> {
-            rule.validate("TestPassword$01");
+            rule.validate("test");
         });
     }
+
 }
