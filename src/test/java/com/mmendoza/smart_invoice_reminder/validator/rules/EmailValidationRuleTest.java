@@ -13,20 +13,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class EmailValidationRuleTest {
 
     @InjectMocks
-    private EmailValidationRule emailValidationRule;
+    private EmailValidationRule rule;
 
     @Test
     void nullEmailTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
-            emailValidationRule.validate(null);
+            rule.validate(null);
         });
         assertEquals(UserError.EMAIL_REQUIRED.getMessage(), exception.getMessage());
     }
 
     @Test
-    void emptyEmailTest() {
+    void blankEmailTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
-            emailValidationRule.validate("");
+            rule.validate("");
         });
         assertEquals(UserError.EMAIL_REQUIRED.getMessage(), exception.getMessage());
     }
@@ -34,7 +34,7 @@ class EmailValidationRuleTest {
     @Test
     void emailFormatTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
-            emailValidationRule.validate("a@a");
+            rule.validate("test@");
         });
         assertEquals(UserError.EMAIL_INVALID.getMessage(), exception.getMessage());
     }
@@ -42,7 +42,7 @@ class EmailValidationRuleTest {
     @Test
     void validEmailTest() {
         assertDoesNotThrow(() -> {
-            emailValidationRule.validate("example@gmail.com");
+            rule.validate("test@gmail.com");
         });
     }
 }

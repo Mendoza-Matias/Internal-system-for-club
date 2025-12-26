@@ -1,7 +1,7 @@
 package com.mmendoza.smart_invoice_reminder.validator.rules;
 
 import com.mmendoza.smart_invoice_reminder.exceptions.ValidationException;
-import com.mmendoza.smart_invoice_reminder.exceptions.errors.UserError;
+import com.mmendoza.smart_invoice_reminder.exceptions.errors.ClientError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,39 +10,39 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class PasswordValidationRuleTest {
+class TelephoneValidationRuleTest {
 
     @InjectMocks
-    private PasswordValidationRule rule;
+    private TelephoneValidationRule rule;
 
     @Test
-    void nullPasswordTest() {
+    void nullTelephoneTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
             rule.validate(null);
         });
-        assertEquals(UserError.PASSWORD_REQUIRED.getMessage(), exception.getMessage());
+        assertEquals(ClientError.TELEPHONE_REQUIRED.getMessage(), exception.getMessage());
     }
 
     @Test
-    void blankPasswordTest() {
+    void blankTelephoneTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
             rule.validate("");
         });
-        assertEquals(UserError.PASSWORD_REQUIRED.getMessage(), exception.getMessage());
+        assertEquals(ClientError.TELEPHONE_REQUIRED.getMessage(), exception.getMessage());
     }
 
     @Test
-    void passwordFormatTest() {
+    void telephoneFormatTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
-            rule.validate("pass");
+            rule.validate("+551170001025");
         });
-        assertEquals(UserError.PASSWORD_INVALID.getMessage(), exception.getMessage());
+        assertEquals(ClientError.TELEPHONE_INVALID.getMessage(), exception.getMessage());
     }
 
     @Test
-    void validPasswordTest() {
+    void validTelephoneTest() {
         assertDoesNotThrow(() -> {
-            rule.validate("TestPassword$01");
+            rule.validate("+5491170001025");
         });
     }
 }

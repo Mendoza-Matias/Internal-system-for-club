@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 @Component
 public class TelephoneValidationRule {
 
-    private static final Pattern TELEPHONE_PATTERN = Pattern.compile("/(?<=\\s|:)\\(?(?:(0?[1-3]\\d{1,2})\\)?(?:\\s|-)?)?((?:\\d[\\d-]{5}|15[\\s\\d-]{7})\\d+)/");
+    private static final Pattern TELEPHONE_PATTERN = Pattern.compile("^(\\+54\\s?)?(9\\s?)?(\\(0\\))?(\\d{2,3})\\s?\\d{4,8}$");
 
     public void validate(String telephone) {
         if (telephone == null || telephone.isBlank()) {

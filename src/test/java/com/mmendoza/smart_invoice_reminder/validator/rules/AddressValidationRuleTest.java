@@ -1,7 +1,8 @@
 package com.mmendoza.smart_invoice_reminder.validator.rules;
 
 import com.mmendoza.smart_invoice_reminder.exceptions.ValidationException;
-import com.mmendoza.smart_invoice_reminder.exceptions.errors.UserError;
+import com.mmendoza.smart_invoice_reminder.exceptions.errors.ClientError;
+import com.mmendoza.smart_invoice_reminder.exceptions.errors.InvoiceError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,39 +11,32 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class PasswordValidationRuleTest {
+class AddressValidationRuleTest {
 
     @InjectMocks
-    private PasswordValidationRule rule;
+    private AddressValidationRule rule;
 
     @Test
-    void nullPasswordTest() {
+    void nullAddressTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
             rule.validate(null);
         });
-        assertEquals(UserError.PASSWORD_REQUIRED.getMessage(), exception.getMessage());
+        assertEquals(ClientError.ADDRESS_REQUIRED.getMessage(), exception.getMessage());
     }
 
     @Test
-    void blankPasswordTest() {
+    void blankAddressTest() {
         ValidationException exception = assertThrows(ValidationException.class, () -> {
             rule.validate("");
         });
-        assertEquals(UserError.PASSWORD_REQUIRED.getMessage(), exception.getMessage());
+        assertEquals(ClientError.ADDRESS_REQUIRED.getMessage(), exception.getMessage());
     }
 
     @Test
-    void passwordFormatTest() {
-        ValidationException exception = assertThrows(ValidationException.class, () -> {
-            rule.validate("pass");
-        });
-        assertEquals(UserError.PASSWORD_INVALID.getMessage(), exception.getMessage());
-    }
-
-    @Test
-    void validPasswordTest() {
+    void validAddressTest() {
         assertDoesNotThrow(() -> {
-            rule.validate("TestPassword$01");
+            rule.validate("test 123");
         });
     }
+
 }

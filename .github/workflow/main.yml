@@ -1,0 +1,35 @@
+name: Java CI with Maven
+
+#trigger when anything is pushed to the main branch
+on:
+  push:
+    branches: [ "feature/*" ]
+  merge:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+
+    #build will run on a self-hosted server
+    runs-on: self-hosted
+
+    steps:
+      #check out repository and clone repository to the self-hosted server
+      - uses: actions/checkout@v3
+
+      #set up Java on the server
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository # Path to cache
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }} # Unique cache key
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Build with Maven
+        run: ./mvnw clean install

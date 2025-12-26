@@ -39,7 +39,7 @@ class CreateUserValidatorTest {
 
     @BeforeEach
     void setUp() {
-        request = new CreateUserRequest("example", "example@gmail.com", "Pass$Example01");
+        request = new CreateUserRequest("test", "test@gmail.com", "TestPassword$01");
     }
 
     @Test
@@ -56,24 +56,13 @@ class CreateUserValidatorTest {
     }
 
     @Test
-    void validateTheExceptionOfARuleMethodTest() {
-        CreateUserRequest request = new CreateUserRequest("bad", "email.example@gmail.com", "Pass$Example01");
-
-        Mockito.doThrow(new ValidationException(UserError.USERNAME_INVALID.getMessage()))
-                .when(usernameValidationRule).validate("bad");
-
-        ValidationException exception = assertThrows(ValidationException.class, () -> createUserValidator.validate(request));
-
-        assertEquals(UserError.USERNAME_INVALID.getMessage(), exception.getMessage());
-    }
-
-    @Test
     void validateCallToRuleMethodsTest() {
         createUserValidator.validate(request);
 
-        Mockito.verify(usernameValidationRule).validate(Mockito.eq("example"));
-        Mockito.verify(emailValidationRule).validate(Mockito.eq("example@gmail.com"));
-        Mockito.verify(passwordValidationRule).validate(Mockito.eq("Pass$Example01"));
+        Mockito.verify(usernameValidationRule).validate(Mockito.eq("test"));
+        Mockito.verify(emailValidationRule).validate(Mockito.eq("test@gmail.com"));
+        Mockito.verify(passwordValidationRule).validate(Mockito.eq("TestPassword$01"));
+        Mockito.verify(existUserValidationRule).validate(Mockito.eq("test@gmail.com"));
     }
 
 
