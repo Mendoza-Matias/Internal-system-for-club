@@ -12,7 +12,7 @@ jobs:
   build:
 
     #build will run on a self-hosted server
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       #check out repository and clone repository to the self-hosted server
