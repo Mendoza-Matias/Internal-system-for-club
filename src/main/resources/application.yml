@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: internal_system_for_club
+server:
+  port: 9005
