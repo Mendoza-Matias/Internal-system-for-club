@@ -1,5 +1,6 @@
 spring:
-  application:
-    name: internal_system_for_club
-server:
-  port: 9005
+  profiles:
+    active: dev
+  security:
+    jwt:
+      secret-key: ${SECRET_KEY}
