@@ -22,7 +22,7 @@ public class SpringJpaUserRepository implements UserRepository {
 
     @Override
     public void save(User user) {
-        UserEntity userEntity = userEntityMapper.toUserEntity(user);
+        UserEntity userEntity = userEntityMapper.toEntity(user);
         userJpaRepository.save(userEntity);
     }
 

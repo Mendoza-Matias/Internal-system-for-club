@@ -13,7 +13,7 @@ public class UserEntityMapper {
         this.roleEntityMapper = roleEntityMapper;
     }
 
-    public UserEntity toUserEntity(User user) {
+    public UserEntity toEntity(User user) {
         return new UserEntity(
                 user.getId(),
                 user.getUsername(),

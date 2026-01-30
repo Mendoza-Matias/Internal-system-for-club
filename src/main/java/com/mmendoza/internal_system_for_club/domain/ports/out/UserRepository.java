@@ -12,5 +12,7 @@ public interface UserRepository {
 
     Optional<User> getUserByUsername(String username);
 
+    void addRoleToUser(Long userId, String role);
+
     boolean existsByEmail(String email);
 }

@@ -1,6 +1,6 @@
 package com.mmendoza.internal_system_for_club.application.service;
 
-import com.mmendoza.internal_system_for_club.domain.exception.RoleNotConfiguredException;
+import com.mmendoza.internal_system_for_club.domain.exception.RoleNotFoundException;
 import com.mmendoza.internal_system_for_club.domain.model.Role;
 import com.mmendoza.internal_system_for_club.domain.ports.out.RoleRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,10 +16,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class DefaultRoleProviderTest {
+class RoleProviderTest {
 
     @InjectMocks
-    private DefaultRoleProvider defaultRoleProvider;
+    private RoleProvider roleProvider;
 
     @Mock
     private RoleRepository roleRepository;
@@ -41,7 +41,7 @@ class DefaultRoleProviderTest {
         String defaultRole = "USER";
         Mockito.when(roleRepository.findByName(defaultRole)).thenReturn(Optional.of(expectedRole));
 
-        Role result = defaultRoleProvider.getDefaultRole();
+        Role result = roleProvider.getDefaultRole();
 
         assertEquals(expectedRole.getId(), result.getId());
         assertEquals(expectedRole.getName(), result.getName());
@@ -56,7 +56,7 @@ class DefaultRoleProviderTest {
         String defaultRole = "USER";
         Mockito.when(roleRepository.findByName(defaultRole)).thenReturn(Optional.empty());
 
-        RoleNotConfiguredException exception = assertThrows(RoleNotConfiguredException.class, () -> defaultRoleProvider.getDefaultRole());
+        RoleNotFoundException exception = assertThrows(RoleNotFoundException.class, () -> roleProvider.getDefaultRole());
 
         assertEquals("Default role USER not configured", exception.getMessage());
 

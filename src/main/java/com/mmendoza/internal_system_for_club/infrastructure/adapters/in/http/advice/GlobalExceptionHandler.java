@@ -1,6 +1,6 @@
 package com.mmendoza.internal_system_for_club.infrastructure.adapters.in.http.advice;
 
-import com.mmendoza.internal_system_for_club.domain.exception.RoleNotConfiguredException;
+import com.mmendoza.internal_system_for_club.domain.exception.RoleNotFoundException;
 import com.mmendoza.internal_system_for_club.domain.exception.UserExistingException;
 import com.mmendoza.internal_system_for_club.domain.exception.UserNotFoundException;
 import com.mmendoza.internal_system_for_club.domain.exception.dto.ExceptionDto;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = {RoleNotConfiguredException.class})
+    @ExceptionHandler(value = {RoleNotFoundException.class})
     @ResponseBody
-    public ResponseEntity<ExceptionDto> handleRoleNotConfiguredException(RoleNotConfiguredException exception) {
+    public ResponseEntity<ExceptionDto> handleRoleNotConfiguredException(RoleNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionDto(HttpStatus.NOT_FOUND.value(), "NOT FOUND", exception.getMessage()));
     }
 

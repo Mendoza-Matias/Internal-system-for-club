@@ -58,7 +58,7 @@ class UserEntityMapperTest {
 
     @Test
     void should_return_user_entity() {
-        UserEntity result = userEntityMapper.toUserEntity(user);
+        UserEntity result = userEntityMapper.toEntity(user);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());

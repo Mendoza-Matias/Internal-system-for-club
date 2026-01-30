@@ -1,6 +1,6 @@
 package com.mmendoza.internal_system_for_club.application.usecase.auth;
 
-import com.mmendoza.internal_system_for_club.application.service.DefaultRoleProvider;
+import com.mmendoza.internal_system_for_club.application.service.RoleInteractor;
 import com.mmendoza.internal_system_for_club.domain.exception.UserExistingException;
 import com.mmendoza.internal_system_for_club.domain.model.Role;
 import com.mmendoza.internal_system_for_club.domain.model.User;
@@ -15,12 +15,12 @@ import java.util.Set;
 public class RegisterUserInteractor implements RegisterUserUseCase {
 
     private final UserRepository userRepository;
-    private final DefaultRoleProvider defaultRoleProvider;
+    private final RoleInteractor roleInteractor;
     private final PasswordEncoder passwordEncoder;
 
-    public RegisterUserInteractor(UserRepository userRepository, DefaultRoleProvider defaultRoleProvider, PasswordEncoder passwordEncoder) {
+    public RegisterUserInteractor(UserRepository userRepository, RoleInteractor roleInteractor, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.defaultRoleProvider = defaultRoleProvider;
+        this.roleInteractor = roleInteractor;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -33,7 +33,7 @@ public class RegisterUserInteractor implements RegisterUserUseCase {
 
         String hashedPassword = passwordEncoder.encode(request.getPassword());
 
-        Role defaultRole = defaultRoleProvider.getDefaultRole();
+        Role defaultRole = roleInteractor.getByName("USER");
 
         User user = User.create(
                 request.getUsername(),
